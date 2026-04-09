@@ -8,11 +8,11 @@ export const SITE_RECIPE: SiteRecipe = {
   footerTemplate: 'columns-footer',
   motionPack: 'minimal',
   primaryTask: 'listing',
-  enabledTasks: ['listing'],
+  enabledTasks: ['listing', 'classified', 'profile'],
   taskTemplates: {
     listing: 'listing-directory',
-    profile: 'profile-business',
     classified: 'classified-market',
+    profile: 'profile-business',
   },
   manualOverrides: {
     navbar: false,
