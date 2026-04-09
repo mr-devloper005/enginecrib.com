@@ -4,12 +4,12 @@ export const SITE_THEME = defineSiteTheme({
   shell: 'directory',
   hero: {
     variant: 'search-first',
-    eyebrow: 'Business discovery system',
+    eyebrow: 'Premium multi-surface publishing system',
   },
   home: {
     layout: 'directory-stack',
     primaryTask: 'listing',
-    featuredTaskKeys: ['listing', 'profile', 'classified'],
+    featuredTaskKeys: ['listing', 'classified', 'profile'],
   },
   navigation: {
     variant: 'compact',
@@ -21,7 +21,7 @@ export const SITE_THEME = defineSiteTheme({
     listing: 'listing-elevated',
     article: 'editorial-feature',
     image: 'studio-panel',
-    profile: 'studio-panel',
+    profile: 'catalog-grid',
     classified: 'catalog-grid',
     pdf: 'catalog-grid',
     sbm: 'editorial-feature',

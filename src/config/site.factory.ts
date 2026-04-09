@@ -7,13 +7,8 @@ export const SITE_FACTORY_RECIPE: SiteFactoryRecipe = {
   homeLayout: 'listing-home',
   motionPack: 'minimal',
   primaryTask: 'listing',
-  enabledTasks: ['listing', 'classified', 'article', 'image', 'profile', 'sbm'],
+  enabledTasks: ['listing'],
   taskLayouts: {
     listing: 'listing-directory',
-    classified: 'classified-market',
-    article: 'article-editorial',
-    image: 'image-portfolio',
-    profile: 'profile-business',
-    sbm: 'sbm-curation',
   },
 }
