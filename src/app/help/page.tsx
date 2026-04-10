@@ -6,9 +6,9 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { mockFaqs } from '@/data/mock-data'
 
 const topics = [
-  { title: 'Getting Started', description: 'Create your account and publish your first post.' },
-  { title: 'Bookmarks & Collections', description: 'Save links, organize folders, and share collections.' },
-  { title: 'Listings & Ads', description: 'Manage your business listings and classifieds.' },
+  { title: 'Getting Started', description: 'Create your account and add your first business listing.' },
+  { title: 'Listing Management', description: 'Update business details, services, and contact information.' },
+  { title: 'Visibility & Trust', description: 'Improve category placement and keep your listing profile complete.' },
 ]
 
 export default function HelpPage() {

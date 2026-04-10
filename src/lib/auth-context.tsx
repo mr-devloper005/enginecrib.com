@@ -9,6 +9,7 @@ interface AuthContextType {
   user: User | null
   isAuthenticated: boolean
   isLoading: boolean
+  isReady: boolean
   login: (email: string, password: string) => Promise<void>
   logout: () => void
   signup: (name: string, email: string, password: string) => Promise<void>
@@ -20,12 +21,14 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [isReady, setIsReady] = useState(false)
 
   useEffect(() => {
     const storedUser = loadFromStorage<User | null>(storageKeys.user, null)
     if (storedUser) {
       setUser(storedUser)
     }
+    setIsReady(true)
   }, [])
 
   const buildUser = useCallback((overrides: Partial<User>) => {
@@ -103,6 +106,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         user,
         isAuthenticated: !!user,
         isLoading,
+        isReady,
         login,
         logout,
         signup,
