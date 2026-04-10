@@ -358,6 +358,10 @@ body[data-nav-layout="sidebar-left"] {
   body[data-nav-layout="sidebar-left"] {
     padding-left: 21rem;
   }
+
+  body[data-nav-layout="sidebar-left"][data-sidebar-compact="true"] {
+    padding-left: 7rem;
+  }
 }
 
 body[data-nav-layout="sidebar-left"] main {
