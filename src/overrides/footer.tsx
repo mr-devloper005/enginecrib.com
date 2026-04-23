@@ -9,7 +9,7 @@ export const FOOTER_OVERRIDE_ENABLED = true
 const footerLinks = [
   { label: 'About us', href: '/about' },
   { label: 'Privacy Policy', href: '/privacy' },
-  { label: 'Advertise', href: '/contact' },
+  { label: 'Advertise', href: '/advertise' },
   { label: 'Contact us', href: '/contact' },
   { label: 'Trust', href: '/terms' },
 ] as const
