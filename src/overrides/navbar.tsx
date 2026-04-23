@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Building2, ChevronLeft, ChevronRight, Menu, Plus, Search, X } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Menu, Plus, Search, X } from 'lucide-react'
 import { AuthAwareCreateLink } from '@/components/shared/auth-aware-create-link'
 import { Button } from '@/components/ui/button'
 import { NavbarAuthControls } from '@/components/shared/navbar-auth-controls'
@@ -49,8 +49,14 @@ export function NavbarOverride() {
       <header data-mobile-nav="true" className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/92 backdrop-blur-xl">
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
           <Link href="/" className="flex min-w-0 items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#0d4f9a] text-white shadow-[0_14px_28px_rgba(13,79,154,0.18)]">
-              <Building2 className="h-6 w-6" />
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-white p-1.5 shadow-[0_14px_28px_rgba(15,23,42,0.08)]">
+              <img
+                src="/favicon.png?v=20260413"
+                alt={`${SITE_CONFIG.name} logo`}
+                width={48}
+                height={48}
+                className="h-full w-full object-contain"
+              />
             </div>
             <div className="min-w-0">
               <span className="block truncate text-lg font-semibold text-slate-950">{SITE_CONFIG.name}</span>
@@ -157,8 +163,14 @@ export function NavbarOverride() {
           <div className={cn('flex flex-col', isSidebarCompact ? 'items-center' : 'items-stretch')}>
             <div className={cn('flex items-center gap-3', isSidebarCompact && 'justify-center')}>
               <Link href="/" className={cn('flex items-center gap-3', isSidebarCompact && 'justify-center')}>
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#0d4f9a] text-white shadow-[0_14px_28px_rgba(13,79,154,0.18)]">
-                  <Building2 className="h-6 w-6" />
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-white p-1.5 shadow-[0_14px_28px_rgba(15,23,42,0.08)]">
+                  <img
+                    src="/favicon.png?v=20260413"
+                    alt={`${SITE_CONFIG.name} logo`}
+                    width={48}
+                    height={48}
+                    className="h-full w-full object-contain"
+                  />
                 </div>
                 {!isSidebarCompact ? (
                   <div className="min-w-0">
