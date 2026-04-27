@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useMemo, useState } from "react";
 import { MessageSquare, Trash2 } from "lucide-react";
@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { loadFromStorage, saveToStorage, storageKeys } from "@/lib/local-storage";
 import type { User } from "@/types";
+import { getDirectoryUiPreset } from "@/design/directory-ui";
 
 const API_BASE =
   process.env.NEXT_PUBLIC_MASTER_PANEL_URL ||
@@ -94,6 +95,7 @@ export function ArticleComments({ slug }: { slug: string }) {
   const [commentBody, setCommentBody] = useState("");
   const [formError, setFormError] = useState<string | null>(null);
   const pageSize = 10;
+  const ui = getDirectoryUiPreset();
 
   useEffect(() => {
     const saved = loadFromStorage<LocalComment[]>(commentStorageKey(slug), []);
@@ -250,7 +252,7 @@ export function ArticleComments({ slug }: { slug: string }) {
         Comments
       </div>
 
-      <form onSubmit={handleSubmit} className="mt-6 rounded-2xl border border-border bg-white p-5 shadow-sm">
+      <form onSubmit={handleSubmit} className={`mt-6 p-5 shadow-sm ${ui.commentFrame}`}>
         <div className="space-y-2">
           <label htmlFor="comment-body" className="text-sm font-medium text-foreground">
             Add a comment
@@ -260,7 +262,7 @@ export function ArticleComments({ slug }: { slug: string }) {
             value={commentBody}
             onChange={(event) => setCommentBody(event.target.value)}
             placeholder="Write your comment here"
-            className="min-h-28"
+            className={`min-h-28 ${ui.input}`}
             maxLength={2000}
             disabled={limitReached}
           />
@@ -286,7 +288,7 @@ export function ArticleComments({ slug }: { slug: string }) {
                 : `Limit resets after ${resetLabel}.`}
             </p>
           </div>
-          <Button type="submit" disabled={limitReached}>
+          <Button type="submit" disabled={limitReached} className={ui.primaryButton}>
             Publish Comment
           </Button>
         </div>
@@ -302,7 +304,7 @@ export function ArticleComments({ slug }: { slug: string }) {
                 key={comment.id}
                 id={`comment-${comment.id}`}
                 className={`rounded-2xl border p-4 ${
-                  isHighlighted ? "border-primary/50 bg-primary/5" : "border-border bg-white"
+                  isHighlighted ? `${ui.commentFrame} ring-2 ring-primary/30` : ui.commentFrame
                 }`}
               >
                 <div className="flex items-center justify-between gap-3">
@@ -334,7 +336,7 @@ export function ArticleComments({ slug }: { slug: string }) {
           })}
         </div>
       ) : (
-        <div className="mt-6 rounded-2xl border border-dashed border-border p-6 text-center text-sm text-muted-foreground">
+        <div className={`mt-6 border border-dashed p-6 text-center text-sm ${ui.softPanel} ${ui.muted}`}>
           No comments yet.
         </div>
       )}
@@ -367,3 +369,5 @@ export function ArticleComments({ slug }: { slug: string }) {
     </section>
   );
 }
+
+
