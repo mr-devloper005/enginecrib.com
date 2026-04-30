@@ -43,22 +43,16 @@ export function TaskListClient({ task, initialPosts, category, className }: Prop
       combined.push(post);
     });
 
-    const normalizedCategory = category ? normalizeCategory(category) : "all";
-    if (normalizedCategory === "all") {
-      return combined.filter((post) => {
-        const content = post.content && typeof post.content === "object" ? post.content : {};
-        const value = typeof (content as any).category === "string" ? (content as any).category : "";
-        return !value || isValidCategory(value);
-      });
+    // If category is set, server already filtered, so just return combined
+    // If no category, do client-side validation
+    if (category) {
+      return combined;
     }
 
     return combined.filter((post) => {
       const content = post.content && typeof post.content === "object" ? post.content : {};
-      const value =
-        typeof (content as any).category === "string"
-          ? normalizeCategory((content as any).category)
-          : "";
-      return value === normalizedCategory;
+      const value = typeof (content as any).category === "string" ? (content as any).category : "";
+      return !value || isValidCategory(value);
     });
   }, [category, initialPosts, localPosts, mounted]);
 

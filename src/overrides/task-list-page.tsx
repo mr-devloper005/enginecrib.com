@@ -1,10 +1,11 @@
 import Link from 'next/link'
-import { ArrowRight, Building2, Search, SlidersHorizontal } from 'lucide-react'
+import { ArrowRight, Building2 } from 'lucide-react'
 import { AuthAwareCreateLink } from '@/components/shared/auth-aware-create-link'
 import { Footer } from '@/components/shared/footer'
 import { NavbarShell } from '@/components/shared/navbar-shell'
 import { SchemaJsonLd } from '@/components/seo/schema-jsonld'
 import { TaskListClient } from '@/components/tasks/task-list-client'
+import { TaskListFilterForm } from '@/overrides/task-list-page-client'
 import { CATEGORY_OPTIONS, normalizeCategory } from '@/lib/categories'
 import { SITE_CONFIG, getTaskConfig, type TaskKey } from '@/lib/site-config'
 import { fetchTaskPosts } from '@/lib/task-data'
@@ -13,8 +14,8 @@ export const TASK_LIST_PAGE_OVERRIDE_ENABLED = true
 
 export async function TaskListPageOverride({ task, category }: { task: TaskKey; category?: string }) {
   const taskConfig = getTaskConfig(task)
-  const posts = await fetchTaskPosts(task, 30)
   const normalizedCategory = category ? normalizeCategory(category) : 'all'
+  const posts = await fetchTaskPosts(task, 30, { category: normalizedCategory === 'all' ? undefined : normalizedCategory, fresh: true })
   const baseUrl = SITE_CONFIG.baseUrl.replace(/\/$/, '')
 
   return (
@@ -57,25 +58,7 @@ export async function TaskListPageOverride({ task, category }: { task: TaskKey; 
                 </div>
               </div>
 
-              <form action={taskConfig?.route || '#'} className="rounded-[1.75rem] border border-white/15 bg-white/10 p-6 backdrop-blur-sm">
-                <div className="flex items-center gap-2 text-sm font-semibold text-white">
-                  <SlidersHorizontal className="h-4 w-4" />
-                  Filter results
-                </div>
-                <label className="mt-5 block text-xs font-semibold uppercase tracking-[0.2em] text-blue-100">Category</label>
-                <div className="mt-2 rounded-2xl bg-white px-4">
-                  <select name="category" defaultValue={normalizedCategory} className="h-12 w-full bg-transparent text-sm text-slate-700 outline-none">
-                    <option value="all">All categories</option>
-                    {CATEGORY_OPTIONS.map((item) => (
-                      <option key={item.slug} value={item.slug}>{item.name}</option>
-                    ))}
-                  </select>
-                </div>
-                <button type="submit" className="mt-4 inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-white text-sm font-semibold text-[#0d4f9a] hover:bg-blue-50">
-                  <Search className="h-4 w-4" />
-                  Apply filters
-                </button>
-              </form>
+              <TaskListFilterForm taskRoute={taskConfig?.route || '/'} currentCategory={normalizedCategory} />
             </div>
           </section>
 
