@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { TaskPostCard } from "@/components/shared/task-post-card";
 import { buildPostUrl } from "@/lib/task-data";
 import { normalizeCategory, isValidCategory } from "@/lib/categories";
@@ -18,41 +18,43 @@ type Props = {
 };
 
 export function TaskListClient({ task, initialPosts, category, className }: Props) {
+  const [mounted, setMounted] = useState(false);
   const localPosts = getLocalPostsForTask(task);
   const ui = getDirectoryUiPreset();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const merged = useMemo(() => {
     const bySlug = new Set<string>();
     const combined: Array<SitePost & { localOnly?: boolean; task?: TaskKey }> = [];
 
-    localPosts.forEach((post) => {
-      if (post.slug) bySlug.add(post.slug);
-      combined.push(post);
-    });
+    // Only include local posts after component has mounted to prevent hydration mismatch
+    if (mounted) {
+      localPosts.forEach((post) => {
+        if (post.slug) bySlug.add(post.slug);
+        combined.push(post);
+      });
+    }
 
     initialPosts.forEach((post) => {
       if (post.slug && bySlug.has(post.slug)) return;
       combined.push(post);
     });
 
-    const normalizedCategory = category ? normalizeCategory(category) : "all";
-    if (normalizedCategory === "all") {
-      return combined.filter((post) => {
-        const content = post.content && typeof post.content === "object" ? post.content : {};
-        const value = typeof (content as any).category === "string" ? (content as any).category : "";
-        return !value || isValidCategory(value);
-      });
+    // If category is set, server already filtered, so just return combined
+    // If no category, do client-side validation
+    if (category) {
+      return combined;
     }
 
     return combined.filter((post) => {
       const content = post.content && typeof post.content === "object" ? post.content : {};
-      const value =
-        typeof (content as any).category === "string"
-          ? normalizeCategory((content as any).category)
-          : "";
-      return value === normalizedCategory;
+      const value = typeof (content as any).category === "string" ? (content as any).category : "";
+      return !value || isValidCategory(value);
     });
-  }, [category, initialPosts, localPosts]);
+  }, [category, initialPosts, localPosts, mounted]);
 
   if (!merged.length) {
     return (

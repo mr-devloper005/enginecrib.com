@@ -1,7 +1,7 @@
 import { SITE_CONFIG, type TaskKey } from "./site-config";
 import { fetchSiteFeed, type SiteFeed, type SitePost } from "./site-connector";
 import { getMockPostsForTask } from "./mock-posts";
-import { isValidCategory } from "./categories";
+import { isValidCategory, normalizeCategory } from "./categories";
 
 const getTaskContentType = (task: TaskKey) =>
   SITE_CONFIG.tasks.find((item) => item.key === task)?.contentType || task;
@@ -28,13 +28,14 @@ export const getPostTaskKey = (post: SitePost): TaskKey | null => {
 export const fetchTaskPosts = async (
   task: TaskKey,
   limit = 8,
-  options?: { allowMockFallback?: boolean; fresh?: boolean }
+  options?: { allowMockFallback?: boolean; fresh?: boolean; category?: string }
 ) => {
   const allowMockFallback = options?.allowMockFallback ?? process.env.NEXT_PUBLIC_USE_MOCK_CONTENT === "true";
   const type = getTaskContentType(task);
+  const categoryFilter = options?.category;
   const pickTaskPosts = (feed: SiteFeed<SitePost> | null) => {
     if (!feed) return [];
-    return feed.posts
+    const filtered = feed.posts
       .filter((post) => {
         const status =
           typeof (post as any).status === "string"
@@ -44,9 +45,17 @@ export const fetchTaskPosts = async (
         if (getPostType(post) !== type) return false;
         const content = post.content && typeof post.content === "object" ? post.content : {};
         const category = typeof (content as any).category === "string" ? (content as any).category : "";
-        return !category || isValidCategory(category);
+        // If no category filter, show all posts (with or without category)
+        if (!categoryFilter) return true;
+        // If category filter is set, only show posts matching that category
+        // Normalize both to handle name vs slug mismatches
+        const normalizedPostCategory = normalizeCategory(category);
+        const normalizedFilter = normalizeCategory(categoryFilter);
+        if (categoryFilter && normalizedPostCategory !== normalizedFilter) return false;
+        return true;
       })
       .slice(0, limit);
+    return filtered;
   };
 
   try {
@@ -58,9 +67,9 @@ export const fetchTaskPosts = async (
     const filtered = pickTaskPosts(freshFeed);
     return filtered.length || !allowMockFallback
       ? filtered
-      : getMockPostsForTask(task).slice(0, limit);
+      : getMockPostsForTask(task, categoryFilter).slice(0, limit);
   } catch {
-    return allowMockFallback ? getMockPostsForTask(task).slice(0, limit) : [];
+    return allowMockFallback ? getMockPostsForTask(task, categoryFilter).slice(0, limit) : [];
   }
 };
 
