@@ -87,37 +87,6 @@ export default function AboutPage() {
         </div>
       </div>
 
-      <div className="mt-16">
-        <div className="mb-8 text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#0d4f9a]">People behind the platform</p>
-          <h2 className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-slate-950 sm:text-3xl">Team & editorial</h2>
-          <p className="mx-auto mt-3 max-w-2xl text-sm text-slate-500">
-            Product, partnerships, and listing quality are owned by a small crew obsessed with automotive operations and
-            great UX.
-          </p>
-        </div>
-        <div className="grid gap-6 md:grid-cols-3">
-          {mockTeamMembers.map((member) => (
-            <div
-              key={member.id}
-              className="group rounded-[1.6rem] border border-slate-200 bg-white p-6 shadow-[0_18px_40px_rgba(15,23,42,0.05)] transition-transform hover:-translate-y-1"
-            >
-              <div className="flex items-center gap-3">
-                <Avatar className="h-14 w-14 border border-slate-200">
-                  <AvatarImage src={member.avatar} alt="" />
-                  <AvatarFallback className="bg-slate-100 text-slate-700">{member.name.charAt(0)}</AvatarFallback>
-                </Avatar>
-                <div>
-                  <p className="font-semibold text-slate-950">{member.name}</p>
-                  <p className="text-xs uppercase tracking-[0.12em] text-[#0d4f9a]">{member.role}</p>
-                </div>
-              </div>
-              <p className="mt-4 text-sm leading-7 text-slate-600">{member.bio}</p>
-              <p className="mt-3 text-xs font-medium uppercase tracking-[0.12em] text-slate-500">{member.location}</p>
-            </div>
-          ))}
-        </div>
-      </div>
     </EcMarketingPage>
   );
 }
