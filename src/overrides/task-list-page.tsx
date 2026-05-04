@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import Link from 'next/link'
 import { ArrowRight, Building2 } from 'lucide-react'
 import { AuthAwareCreateLink } from '@/components/shared/auth-aware-create-link'
@@ -58,7 +59,9 @@ export async function TaskListPageOverride({ task, category }: { task: TaskKey; 
                 </div>
               </div>
 
-              <TaskListFilterForm taskRoute={taskConfig?.route || '/'} currentCategory={normalizedCategory} />
+              <Suspense fallback={<div className="rounded-[1.75rem] border border-white/15 bg-white/10 p-6 backdrop-blur-sm text-sm text-blue-50">Loading filters...</div>}>
+                <TaskListFilterForm taskRoute={taskConfig?.route || '/'} currentCategory={normalizedCategory} />
+              </Suspense>
             </div>
           </section>
 
