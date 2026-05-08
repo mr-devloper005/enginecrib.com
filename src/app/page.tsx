@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { Suspense } from 'react'
 import { ArrowRight, Bookmark, Building2, Compass, FileText, Globe2, Image as ImageIcon, LayoutGrid, MapPin, ShieldCheck, Tag, User } from 'lucide-react'
 import { ContentImage } from '@/components/shared/content-image'
 import { NavbarShell } from '@/components/shared/navbar-shell'
@@ -474,7 +475,11 @@ function CurationHome({ primaryTask, bookmarkPosts, profilePosts, articlePosts }
 
 export default async function HomePage() {
   if (HOME_PAGE_OVERRIDE_ENABLED) {
-    return <HomePageOverride />
+    return (
+      <Suspense fallback={<div className="min-h-screen bg-[#f7f9fc] text-slate-950"></div>}>
+        <HomePageOverride />
+      </Suspense>
+    )
   }
 
   const enabledTasks = SITE_CONFIG.tasks.filter((task) => task.enabled)

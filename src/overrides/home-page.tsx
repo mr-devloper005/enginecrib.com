@@ -140,10 +140,6 @@ export async function HomePageOverride() {
             <div className="overflow-hidden rounded-[2rem] bg-[linear-gradient(135deg,#0b57b5_0%,#1178e5_100%)] px-6 py-10 text-white shadow-[0_30px_80px_rgba(12,66,144,0.18)] sm:px-10 lg:px-14 lg:py-14">
               <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
                 <div>
-                  <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em]">
-                    <Sparkles className="h-3.5 w-3.5" />
-                    Listing-first growth platform
-                  </span>
                   <h1 className="mt-6 max-w-3xl text-4xl font-semibold tracking-[-0.05em] sm:text-5xl lg:text-6xl">
                     Grow your business visibility with a cleaner local directory experience.
                   </h1>

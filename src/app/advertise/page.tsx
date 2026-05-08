@@ -31,25 +31,6 @@ const placements = [
   },
 ];
 
-const packages = [
-  {
-    name: "Launch",
-    price: "From $899 / mo",
-    bullets: ["Single metro or category focus", "Featured listing + basic reporting", "Quarterly creative refresh"],
-  },
-  {
-    name: "Scale",
-    price: "Custom",
-    bullets: ["Multi-region or multi-category", "Category spotlight rotation", "Dedicated partner manager"],
-    highlight: true,
-  },
-  {
-    name: "Enterprise",
-    price: "Let’s talk",
-    bullets: ["OEM, insurer, or franchise programs", "APIs & co-branded landing pages", "Custom measurement frameworks"],
-  },
-];
-
 export default function AdvertisePage() {
   return (
     <EcMarketingPage
@@ -92,38 +73,6 @@ export default function AdvertisePage() {
         </p>
       </EcSectionCard>
 
-      <div className="mt-14">
-        <h2 className="text-center text-2xl font-semibold tracking-[-0.03em] text-slate-950 sm:text-3xl">Packages</h2>
-        <p className="mx-auto mt-3 max-w-2xl text-center text-sm text-slate-500">
-          Start with a focused pilot, then expand into additional markets or categories as performance proves out.
-        </p>
-        <div className="mt-10 grid gap-6 lg:grid-cols-3">
-          {packages.map((pkg) => (
-            <div
-              key={pkg.name}
-              className={`flex flex-col rounded-[1.6rem] border p-7 shadow-[0_18px_40px_rgba(15,23,42,0.05)] ${
-                pkg.highlight
-                  ? "border-[#0d4f9a]/35 bg-[linear-gradient(180deg,#e7f1ff_0%,#ffffff_45%)]"
-                  : "border-slate-200 bg-white"
-              }`}
-            >
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#0d4f9a]">{pkg.name}</p>
-              <p className="mt-3 text-xl font-semibold text-slate-950">{pkg.price}</p>
-              <ul className="mt-6 flex-1 space-y-3 text-sm text-slate-600">
-                {pkg.bullets.map((b) => (
-                  <li key={b} className="flex gap-2">
-                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#0d4f9a]" aria-hidden />
-                    <span>{b}</span>
-                  </li>
-                ))}
-              </ul>
-              <Link href="/contact" className={`mt-8 ${pkg.highlight ? ecPrimaryButtonClass : ecOutlineButtonClass}`}>
-                Plan a call
-              </Link>
-            </div>
-          ))}
-        </div>
-      </div>
     </EcMarketingPage>
   );
 }

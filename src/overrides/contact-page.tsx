@@ -107,16 +107,6 @@ export function ContactPageOverride() {
               <Mail className="mr-2 inline h-4 w-4 align-text-bottom" aria-hidden />
               Send message
             </button>
-            <a
-              href={`mailto:${process.env.NEXT_PUBLIC_CONTACT_EMAIL}`}
-              className="inline-flex h-12 w-full items-center justify-center rounded-full border-2 border-[#0d4f9a] px-6 text-sm font-semibold text-[#0d4f9a] transition-colors hover:bg-[#0d4f9a] hover:text-white sm:w-auto"
-            >
-              <Mail className="mr-2 inline h-4 w-4 align-text-bottom" aria-hidden />
-              Email us directly
-            </a>
-            <p className="text-xs leading-6 text-slate-500">
-              For urgent safety concerns about a listing, include "Safety" in the topic field.
-            </p>
           </form>
         </section>
       </div>
