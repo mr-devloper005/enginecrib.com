@@ -48,12 +48,7 @@ export default function AboutPage() {
         </>
       }
     >
-      <div className="grid gap-4 sm:grid-cols-3">
-        <EcStat value="8.6k+" label="Active business profiles" />
-        <EcStat value="180k+" label="Category-led searches" />
-        <EcStat value="12k+" label="Cities & zones covered" />
-      </div>
-
+      
       <div className="mt-12 grid gap-6 lg:grid-cols-3">
         {pillars.map((p) => (
           <EcSectionCard key={p.title} title={p.title}>
