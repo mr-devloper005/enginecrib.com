@@ -29,6 +29,11 @@ export type SiteFeed<TPost = SitePost> = {
   posts: TPost[];
 };
 
+export type SitePostResponse<TPost = SitePost> = {
+  site: SiteBootstrap["site"];
+  post: TPost;
+};
+
 const API_BASE =
   process.env.NEXT_PUBLIC_MASTER_PANEL_URL ||
   process.env.NEXT_PUBLIC_MASTER_API_URL;
@@ -82,6 +87,21 @@ async function fetchPublicJson<T>(path: string, options?: { fresh?: boolean }): 
 
 export async function fetchSiteBootstrap(options?: { fresh?: boolean }): Promise<SiteBootstrap | null> {
   return fetchPublicJson<SiteBootstrap>("/bootstrap", options);
+}
+
+export async function fetchSitePostBySlug<TPost = SitePost>(
+  slug: string,
+  options?: { fresh?: boolean; task?: string }
+): Promise<SitePostResponse<TPost> | null> {
+  const params = new URLSearchParams();
+  if (typeof options?.task === "string" && options.task.trim()) {
+    params.set("task", options.task.trim().toLowerCase());
+  }
+  const query = params.toString();
+  return fetchPublicJson<SitePostResponse<TPost>>(
+    `/post/${encodeURIComponent(slug)}${query ? `?${query}` : ""}`,
+    options
+  );
 }
 
 export async function fetchSiteFeed<TPost = SitePost>(

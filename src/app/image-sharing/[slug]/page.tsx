@@ -2,14 +2,11 @@ import { TaskDetailPage } from "@/components/tasks/task-detail-page";
 import { buildPostMetadata, buildTaskMetadata } from "@/lib/seo";
 import { fetchTaskPostBySlug, fetchTaskPosts } from "@/lib/task-data";
 
-export const revalidate = 3;
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export async function generateStaticParams() {
-  const posts = await fetchTaskPosts("image", 50);
-  if (!posts.length) {
-    return [{ slug: "placeholder" }];
-  }
-  return posts.map((post) => ({ slug: post.slug }));
+  return [];
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {

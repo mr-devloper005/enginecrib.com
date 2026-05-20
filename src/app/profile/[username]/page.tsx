@@ -11,7 +11,8 @@ import { buildPostMetadata, buildTaskMetadata } from "@/lib/seo";
 import { fetchTaskPostBySlug, fetchTaskPosts } from "@/lib/task-data";
 import { SITE_CONFIG } from "@/lib/site-config";
 
-export const revalidate = 3;
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 const escapeHtml = (value: string) =>
   value
@@ -41,11 +42,7 @@ const formatRichHtml = (raw?: string | null, fallback = "Profile details will ap
 };
 
 export async function generateStaticParams() {
-  const posts = await fetchTaskPosts("profile", 50);
-  if (!posts.length) {
-    return [{ username: "placeholder" }];
-  }
-  return posts.map((post) => ({ username: post.slug }));
+  return [];
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ username: string }> }) {
