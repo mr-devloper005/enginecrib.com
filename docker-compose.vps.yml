@@ -4,6 +4,7 @@ services:
     image: ghcr.io/mr-devloper005/enginecrib.com:latest
     env_file:
       - .env
+    network_mode: bridge
     restart: always
     ports:
       - "127.0.0.1:3037:3000"
